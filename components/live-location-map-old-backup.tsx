@@ -1,7 +1,34 @@
 "use client"
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { MapPin, Maximize2, Minimize2, X, Navigation, Loader2 } from 'lucide-react'
+import dynamic from 'next/dynamic'
+
+// Ensure leaflet CSS is only imported on client side
+if (typeof window !== 'undefined') {
+  require('leaflet/dist/leaflet.css')
+}
+
+// Dynamic import to avoid SSR issues with Leaflet
+const MapContainer = dynamic(
+  () => import('react-leaflet').then((mod) => mod.MapContainer),
+  { 
+    ssr: false,
+    loading: () => <div className="flex items-center justify-center h-full"><Loader2 className="w-6 h-6 animate-spin text-accent" /></div>
+  }
+)
+const TileLayer = dynamic(
+  () => import('react-leaflet').then((mod) => mod.TileLayer),
+  { ssr: false }
+)
+const Marker = dynamic(
+  () => import('react-leaflet').then((mod) => mod.Marker),
+  { ssr: false }
+)
+const Popup = dynamic(
+  () => import('react-leaflet').then((mod) => mod.Popup),
+  { ssr: false }
+)
 
 interface LiveLocationMapProps {
   onLocationSelect?: (location: { lat: number; lng: number; address: string }) => void
@@ -13,47 +40,27 @@ export default function LiveLocationMap({ onLocationSelect }: LiveLocationMapPro
   const [isExpanded, setIsExpanded] = useState(false)
   const [isMinimized, setIsMinimized] = useState(false)
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 })
-  const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null)
+  const [userLocation, setUserLocation] = useState<[number, number] | null>(null)
   const [address, setAddress] = useState<string>('')
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string>('')
-  const [map, setMap] = useState<any>(null)
-  const [L, setL] = useState<any>(null)
+  const [isMounted, setIsMounted] = useState(false)
+  const mapRef = useRef<HTMLDivElement>(null)
 
-  // Load Leaflet only on client side
+  // Ensure component is mounted (client-side only)
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      import('leaflet').then((leaflet) => {
-        setL(leaflet.default)
-        
-        // Load CSS
-        if (!document.querySelector('link[href*="leaflet.css"]')) {
-          const link = document.createElement('link')
-          link.rel = 'stylesheet'
-          link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css'
-          document.head.appendChild(link)
-        }
-
-        // Fix default marker icon
-        delete (leaflet.default.Icon.Default.prototype as any)._getIconUrl
-        leaflet.default.Icon.Default.mergeOptions({
-          iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
-          iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-          shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-        })
-      })
-    }
+    setIsMounted(true)
   }, [])
 
   // Get user's current location
   useEffect(() => {
-    if (!L) return
+    if (!isMounted) return
     
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         async (pos) => {
           const { latitude, longitude } = pos.coords
-          setUserLocation({ lat: latitude, lng: longitude })
+          setUserLocation([latitude, longitude])
           
           // Reverse geocode to get address
           try {
@@ -65,21 +72,9 @@ export default function LiveLocationMap({ onLocationSelect }: LiveLocationMapPro
               ? `${data.locality}, ${data.city || data.principalSubdivision}` 
               : `${latitude.toFixed(6)}, ${longitude.toFixed(6)}`
             setAddress(addr)
-            
-            // Notify parent
-            if (onLocationSelect) {
-              onLocationSelect({ lat: latitude, lng: longitude, address: addr })
-            }
-            
             setLoading(false)
           } catch (err) {
-            const addr = `${latitude.toFixed(6)}, ${longitude.toFixed(6)}`
-            setAddress(addr)
-            
-            if (onLocationSelect) {
-              onLocationSelect({ lat: latitude, lng: longitude, address: addr })
-            }
-            
+            setAddress(`${latitude.toFixed(6)}, ${longitude.toFixed(6)}`)
             setLoading(false)
           }
         },
@@ -97,39 +92,33 @@ export default function LiveLocationMap({ onLocationSelect }: LiveLocationMapPro
       setError('Geolocation is not supported by your browser')
       setLoading(false)
     }
-  }, [L, onLocationSelect])
+  }, [isMounted])
 
-  // Initialize map when location is available
+  // Fix Leaflet icon issue in production
   useEffect(() => {
-    if (!L || !userLocation || map) return
-
-    const mapElement = document.getElementById('live-map')
-    if (!mapElement) return
-
-    try {
-      const newMap = L.map('live-map').setView([userLocation.lat, userLocation.lng], 15)
+    if (isMounted && typeof window !== 'undefined') {
+      const L = require('leaflet')
       
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      }).addTo(newMap)
-
-      L.marker([userLocation.lat, userLocation.lng])
-        .addTo(newMap)
-        .bindPopup(`<strong>You are here</strong><br/>${address}`)
-        .openPopup()
-
-      setMap(newMap)
-    } catch (error) {
-      console.error('Map initialization error:', error)
-      setError('Failed to load map')
+      // Fix default marker icon paths
+      delete (L.Icon.Default.prototype as any)._getIconUrl
+      L.Icon.Default.mergeOptions({
+        iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png',
+        iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+      })
     }
+  }, [isMounted])
 
-    return () => {
-      if (map) {
-        map.remove()
-      }
+  // Notify parent component when location changes
+  useEffect(() => {
+    if (userLocation && address && onLocationSelect) {
+      onLocationSelect({
+        lat: userLocation[0],
+        lng: userLocation[1],
+        address: address
+      })
     }
-  }, [L, userLocation, address])
+  }, [userLocation, address, onLocationSelect])
 
   const handleMouseDown = (e: React.MouseEvent) => {
     if ((e.target as HTMLElement).closest('.map-controls')) return
@@ -167,13 +156,10 @@ export default function LiveLocationMap({ onLocationSelect }: LiveLocationMapPro
   const refreshLocation = () => {
     setLoading(true)
     setError('')
-    
-    if (!navigator.geolocation) return
-    
     navigator.geolocation.getCurrentPosition(
       async (pos) => {
         const { latitude, longitude } = pos.coords
-        setUserLocation({ lat: latitude, lng: longitude })
+        setUserLocation([latitude, longitude])
         
         try {
           const response = await fetch(
@@ -184,26 +170,33 @@ export default function LiveLocationMap({ onLocationSelect }: LiveLocationMapPro
             ? `${data.locality}, ${data.city || data.principalSubdivision}` 
             : `${latitude.toFixed(6)}, ${longitude.toFixed(6)}`
           setAddress(addr)
-          
-          if (onLocationSelect) {
-            onLocationSelect({ lat: latitude, lng: longitude, address: addr })
-          }
-          
-          if (map) {
-            map.setView([latitude, longitude], 15)
-          }
-          
           setLoading(false)
         } catch (err) {
-          const addr = `${latitude.toFixed(6)}, ${longitude.toFixed(6)}`
-          setAddress(addr)
+          setAddress(`${latitude.toFixed(6)}, ${longitude.toFixed(6)}`)
           setLoading(false)
         }
       },
       (err) => {
         setError('Unable to refresh location')
         setLoading(false)
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0
       }
+    )
+  }
+
+  // Don't render on server side
+  if (!isMounted) {
+    return (
+      <div className="fixed z-50 bg-black border-2 border-green-400/50 rounded-lg shadow-2xl shadow-green-500/30 p-4" style={{ left: '20px', top: '100px' }}>
+        <div className="flex items-center gap-2">
+          <Loader2 className="w-4 h-4 animate-spin text-accent" />
+          <span className="text-sm text-gray-400 font-mono">Loading map...</span>
+        </div>
+      </div>
     )
   }
 
@@ -220,7 +213,7 @@ export default function LiveLocationMap({ onLocationSelect }: LiveLocationMapPro
         onClick={() => setIsMinimized(false)}
       >
         <div className="w-full h-full flex items-center justify-center">
-          <MapPin className="w-6 h-6 text-green-400 animate-pulse" />
+          <MapPin className="w-8 h-8 text-green-400 animate-pulse" />
         </div>
       </div>
     )
@@ -228,8 +221,9 @@ export default function LiveLocationMap({ onLocationSelect }: LiveLocationMapPro
 
   return (
     <div
-      className={`fixed z-50 bg-black/95 backdrop-blur-sm border-2 border-green-400/50 rounded-lg shadow-2xl shadow-green-500/30 cursor-move transition-all ${
-        isDragging ? 'cursor-grabbing scale-[1.02]' : ''
+      ref={mapRef}
+      className={`fixed z-50 bg-black border-2 border-green-400/50 rounded-lg shadow-2xl shadow-green-500/30 transition-all ${
+        isDragging ? 'cursor-grabbing' : 'cursor-grab'
       } ${isExpanded ? 'w-[600px] h-[500px]' : 'w-[350px] h-[300px]'}`}
       style={{
         left: `${position.x}px`,
@@ -239,6 +233,7 @@ export default function LiveLocationMap({ onLocationSelect }: LiveLocationMapPro
     >
       {/* Header */}
       <div className="bg-black border-b-2 border-green-400/50 p-3 flex items-center justify-between relative">
+        {/* Scanline effect */}
         <div className="absolute inset-0 pointer-events-none opacity-5">
           <div
             className="w-full h-full"
@@ -307,11 +302,29 @@ export default function LiveLocationMap({ onLocationSelect }: LiveLocationMapPro
           </div>
         )}
 
-        {userLocation && !loading && !error && L && (
-          <div 
-            id="live-map" 
-            className="w-full h-full rounded overflow-hidden border border-green-400/30"
-          />
+        {userLocation && !loading && !error && (
+          <div className="w-full h-full rounded overflow-hidden border border-green-400/30 relative">
+            <MapContainer
+              center={userLocation}
+              zoom={15}
+              style={{ height: '100%', width: '100%' }}
+              zoomControl={true}
+            >
+              <TileLayer
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
+              <Marker position={userLocation}>
+                <Popup>
+                  <div className="text-sm">
+                    <strong>You are here</strong>
+                    <br />
+                    {address}
+                  </div>
+                </Popup>
+              </Marker>
+            </MapContainer>
+          </div>
         )}
       </div>
 
@@ -326,10 +339,10 @@ export default function LiveLocationMap({ onLocationSelect }: LiveLocationMapPro
               <p className="text-xs text-red-400 font-mono truncate">{error}</p>
             ) : (
               <>
-                <p className="text-xs text-green-400 font-mono font-bold truncate">{address}</p>
+                <p className="text-xs text-green-400 font-mono truncate">{address}</p>
                 {userLocation && (
-                  <p className="text-[10px] text-gray-500 font-mono mt-0.5">
-                    {userLocation.lat.toFixed(6)}, {userLocation.lng.toFixed(6)}
+                  <p className="text-[10px] text-gray-500 font-mono mt-1">
+                    {userLocation[0].toFixed(6)}, {userLocation[1].toFixed(6)}
                   </p>
                 )}
               </>
