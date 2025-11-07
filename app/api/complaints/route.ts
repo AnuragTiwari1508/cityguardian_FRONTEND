@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import connectDB from '@/lib/db/mongodb';
+import dbConnect from '@/lib/dbConnect';
 import Complaint from '@/models/Complaint';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '../auth/[...nextauth]/route';
@@ -12,7 +12,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    await connectDB();
+    await dbConnect();
     
     const data = await req.json();
     
@@ -29,7 +29,7 @@ export async function POST(req: Request) {
 
 export async function GET(req: Request) {
   try {
-    await connectDB();
+    await dbConnect();
     
     const { searchParams } = new URL(req.url);
     const status = searchParams.get('status');
