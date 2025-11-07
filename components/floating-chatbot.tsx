@@ -93,29 +93,43 @@ export default function FloatingChatbot() {
 
   // WhatsApp integration - Replace with your WhatsApp business number
   const openWhatsApp = () => {
-    const phoneNumber = "1234567890" // Replace with your WhatsApp business number (with country code, no + or spaces)
+    const phoneNumber = "916261072872" // Replace with your WhatsApp business number (with country code, no + or spaces)
     const message = encodeURIComponent("Hi! I need help with CityGuardian.")
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, "_blank")
   }
 
   // Twilio call integration - This will need backend API endpoint
   const initiateTwilioCall = async () => {
+    // Ask user for their phone number
+    const userPhone = prompt("Please enter your phone number (with country code, e.g., +919876543210):")
+    
+    if (!userPhone) {
+      return // User cancelled
+    }
+
+    // Validate phone format
+    if (!userPhone.startsWith('+')) {
+      alert("Please include country code with + sign (e.g., +91 for India)")
+      return
+    }
+
     try {
-      // TODO: You need to implement this backend endpoint
       const response = await fetch("/api/twilio/call", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          to: "+1234567890" // User's phone number (you'd collect this)
+          to: userPhone
         })
       })
       
-      if (response.ok) {
-        alert("We'll call you shortly!")
+      const data = await response.json()
+      
+      if (response.ok && data.success) {
+        alert("We'll call you shortly! 📞")
       } else {
-        alert("Unable to initiate call. Please try WhatsApp instead.")
+        alert(data.message || "Unable to initiate call. Please try WhatsApp instead.")
       }
     } catch (error) {
       console.error("Twilio call error:", error)
@@ -228,7 +242,7 @@ export default function FloatingChatbot() {
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={handleKeyPress}
-                className="flex-1 border-gray-300 focus:border-green-500 focus:ring-green-500"
+                className="flex-1 border-gray-300 focus:border-green-500 focus:ring-green-500 text-gray-900 placeholder:text-gray-500 bg-white"
               />
               <Button
                 onClick={handleSendMessage}

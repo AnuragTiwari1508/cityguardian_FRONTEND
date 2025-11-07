@@ -18,8 +18,6 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // TODO: Uncomment this when you set up Twilio
-    /*
     const twilio = require('twilio')
     const client = twilio(
       process.env.TWILIO_ACCOUNT_SID,
@@ -27,7 +25,7 @@ export async function POST(request: NextRequest) {
     )
 
     const call = await client.calls.create({
-      url: 'http://demo.twilio.com/docs/voice.xml', // Replace with your TwiML URL
+      url: 'http://demo.twilio.com/docs/voice.xml',
       to: to,
       from: process.env.TWILIO_PHONE_NUMBER
     })
@@ -37,13 +35,6 @@ export async function POST(request: NextRequest) {
       callSid: call.sid,
       message: 'Call initiated successfully' 
     })
-    */
-
-    // Temporary response until Twilio is configured
-    return NextResponse.json({
-      success: false,
-      message: 'Twilio is not configured yet. Please use WhatsApp instead.'
-    }, { status: 501 })
 
   } catch (error) {
     console.error('Twilio API error:', error)
