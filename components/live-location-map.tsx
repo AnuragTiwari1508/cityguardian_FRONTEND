@@ -3,12 +3,19 @@
 import { useState, useEffect, useRef } from 'react'
 import { MapPin, Maximize2, Minimize2, X, Navigation, Loader2 } from 'lucide-react'
 import dynamic from 'next/dynamic'
-import 'leaflet/dist/leaflet.css'
+
+// Ensure leaflet CSS is only imported on client side
+if (typeof window !== 'undefined') {
+  require('leaflet/dist/leaflet.css')
+}
 
 // Dynamic import to avoid SSR issues with Leaflet
 const MapContainer = dynamic(
   () => import('react-leaflet').then((mod) => mod.MapContainer),
-  { ssr: false }
+  { 
+    ssr: false,
+    loading: () => <div className="flex items-center justify-center h-full"><Loader2 className="w-6 h-6 animate-spin text-accent" /></div>
+  }
 )
 const TileLayer = dynamic(
   () => import('react-leaflet').then((mod) => mod.TileLayer),
@@ -37,10 +44,18 @@ export default function LiveLocationMap({ onLocationSelect }: LiveLocationMapPro
   const [address, setAddress] = useState<string>('')
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string>('')
+  const [isMounted, setIsMounted] = useState(false)
   const mapRef = useRef<HTMLDivElement>(null)
+
+  // Ensure component is mounted (client-side only)
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   // Get user's current location
   useEffect(() => {
+    if (!isMounted) return
+    
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         async (pos) => {
@@ -77,7 +92,22 @@ export default function LiveLocationMap({ onLocationSelect }: LiveLocationMapPro
       setError('Geolocation is not supported by your browser')
       setLoading(false)
     }
-  }, [])
+  }, [isMounted])
+
+  // Fix Leaflet icon issue in production
+  useEffect(() => {
+    if (isMounted && typeof window !== 'undefined') {
+      const L = require('leaflet')
+      
+      // Fix default marker icon paths
+      delete (L.Icon.Default.prototype as any)._getIconUrl
+      L.Icon.Default.mergeOptions({
+        iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png',
+        iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+      })
+    }
+  }, [isMounted])
 
   // Notify parent component when location changes
   useEffect(() => {
@@ -155,6 +185,18 @@ export default function LiveLocationMap({ onLocationSelect }: LiveLocationMapPro
         timeout: 10000,
         maximumAge: 0
       }
+    )
+  }
+
+  // Don't render on server side
+  if (!isMounted) {
+    return (
+      <div className="fixed z-50 bg-black border-2 border-green-400/50 rounded-lg shadow-2xl shadow-green-500/30 p-4" style={{ left: '20px', top: '100px' }}>
+        <div className="flex items-center gap-2">
+          <Loader2 className="w-4 h-4 animate-spin text-accent" />
+          <span className="text-sm text-gray-400 font-mono">Loading map...</span>
+        </div>
+      </div>
     )
   }
 
