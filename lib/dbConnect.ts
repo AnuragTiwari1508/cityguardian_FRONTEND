@@ -6,22 +6,16 @@ if (!MONGODB_URI) {
   throw new Error('Please define the MONGODB_URI environment variable');
 }
 
-interface Cached {
-  conn: mongoose.Mongoose | null;
-  promise: Promise<mongoose.Mongoose> | null;
-}
-
-declare global {
-  var mongooseCache: Cached;
-}
-
-let cached: Cached = global.mongooseCache || { conn: null, promise: null };
-
 if (!global.mongooseCache) {
-  global.mongooseCache = cached;
+  global.mongooseCache = {
+    conn: null,
+    promise: null,
+  };
 }
 
-async function dbConnect() {
+const cached = global.mongooseCache;
+
+async function dbConnect(): Promise<typeof mongoose> {
   if (cached.conn) {
     return cached.conn;
   }
@@ -31,15 +25,7 @@ async function dbConnect() {
       bufferCommands: false,
     };
 
-    cached.promise = mongoose
-      .connect(MONGODB_URI, opts)
-      .then((mongoose) => {
-        return mongoose;
-      })
-      .catch((error) => {
-        console.error('MongoDB connection error:', error);
-        throw error;
-      });
+    cached.promise = mongoose.connect(MONGODB_URI, opts);
   }
 
   try {
