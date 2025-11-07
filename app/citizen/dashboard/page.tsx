@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import NavigationHeader from "@/components/navigation-header"
 import { 
   Users, 
   MessageSquare, 
@@ -22,10 +23,8 @@ import {
   Share,
   Clock,
   CheckCircle2,
-  X,
-  Menu,
-  Home,
-  Bell
+  Bell,
+  Menu
 } from "lucide-react"
 
 export default function CitizenDashboard() {
@@ -96,93 +95,71 @@ export default function CitizenDashboard() {
     }
   ]
 
-  const NavBar = () => (
-    <nav className="bg-gray-900/95 backdrop-blur-sm border-b border-green-500/30 sticky top-0 z-50">
+  const TabNavigation = () => (
+    <div className="border-b border-gray-700 bg-gray-900/50 backdrop-blur-sm sticky top-16 z-40">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-green-400 rounded flex items-center justify-center text-black font-black text-sm">
-              ⚡
-            </div>
-            <div className="hidden sm:block">
-              <h1 className="text-green-400 font-black text-lg tracking-wider">CITIZEN</h1>
-              <p className="text-green-300/70 text-xs font-mono">OPERATIVE MODE</p>
-            </div>
-          </div>
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex items-center gap-6 py-4">
+          <Button 
+            variant={activeTab === "community" ? "default" : "ghost"}
+            onClick={() => setActiveTab("community")}
+            className={activeTab === "community" ? "bg-green-400 text-black" : "text-green-400 hover:bg-green-400/10"}
+          >
+            <Users className="w-4 h-4 mr-2" />
+            Community
+          </Button>
+          <Button 
+            variant={activeTab === "feed" ? "default" : "ghost"}
+            onClick={() => setActiveTab("feed")}
+            className={activeTab === "feed" ? "bg-green-400 text-black" : "text-green-400 hover:bg-green-400/10"}
+          >
+            <MessageSquare className="w-4 h-4 mr-2" />
+            Feed
+          </Button>
+          <Button 
+            variant={activeTab === "complain" ? "default" : "ghost"}
+            onClick={() => setActiveTab("complain")}
+            className={activeTab === "complain" ? "bg-green-400 text-black" : "text-green-400 hover:bg-green-400/10"}
+          >
+            <AlertTriangle className="w-4 h-4 mr-2" />
+            Complain
+          </Button>
+        </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-6">
+        {/* Mobile Navigation */}
+        <div className="md:hidden py-3">
+          <div className="flex flex-wrap gap-2">
             <Button 
               variant={activeTab === "community" ? "default" : "ghost"}
               onClick={() => setActiveTab("community")}
-              className={activeTab === "community" ? "bg-green-400 text-black" : "text-green-400 hover:bg-green-400/10"}
+              size="sm"
+              className={activeTab === "community" ? "bg-green-400 text-black" : "text-green-400"}
             >
-              <Users className="w-4 h-4 mr-2" />
+              <Users className="w-4 h-4 mr-1" />
               Community
             </Button>
             <Button 
               variant={activeTab === "feed" ? "default" : "ghost"}
               onClick={() => setActiveTab("feed")}
-              className={activeTab === "feed" ? "bg-green-400 text-black" : "text-green-400 hover:bg-green-400/10"}
+              size="sm"
+              className={activeTab === "feed" ? "bg-green-400 text-black" : "text-green-400"}
             >
-              <MessageSquare className="w-4 h-4 mr-2" />
+              <MessageSquare className="w-4 h-4 mr-1" />
               Feed
             </Button>
             <Button 
               variant={activeTab === "complain" ? "default" : "ghost"}
               onClick={() => setActiveTab("complain")}
-              className={activeTab === "complain" ? "bg-green-400 text-black" : "text-green-400 hover:bg-green-400/10"}
+              size="sm"
+              className={activeTab === "complain" ? "bg-green-400 text-black" : "text-green-400"}
             >
-              <AlertTriangle className="w-4 h-4 mr-2" />
+              <AlertTriangle className="w-4 h-4 mr-1" />
               Complain
             </Button>
           </div>
-
-          {/* Mobile menu button */}
-          <Button
-            variant="ghost"
-            size="sm"
-            className="md:hidden text-green-400"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
-            <Menu className="w-5 h-5" />
-          </Button>
         </div>
-
-        {/* Mobile Navigation */}
-        {mobileMenuOpen && (
-          <div className="md:hidden border-t border-green-500/30 py-4">
-            <div className="flex flex-col gap-2">
-              <Button 
-                variant={activeTab === "community" ? "default" : "ghost"}
-                onClick={() => {setActiveTab("community"); setMobileMenuOpen(false)}}
-                className={`justify-start ${activeTab === "community" ? "bg-green-400 text-black" : "text-green-400"}`}
-              >
-                <Users className="w-4 h-4 mr-2" />
-                Community
-              </Button>
-              <Button 
-                variant={activeTab === "feed" ? "default" : "ghost"}
-                onClick={() => {setActiveTab("feed"); setMobileMenuOpen(false)}}
-                className={`justify-start ${activeTab === "feed" ? "bg-green-400 text-black" : "text-green-400"}`}
-              >
-                <MessageSquare className="w-4 h-4 mr-2" />
-                Feed
-              </Button>
-              <Button 
-                variant={activeTab === "complain" ? "default" : "ghost"}
-                onClick={() => {setActiveTab("complain"); setMobileMenuOpen(false)}}
-                className={`justify-start ${activeTab === "complain" ? "bg-green-400 text-black" : "text-green-400"}`}
-              >
-                <AlertTriangle className="w-4 h-4 mr-2" />
-                Complain
-              </Button>
-            </div>
-          </div>
-        )}
       </div>
-    </nav>
+    </div>
   )
 
   const FeedPost = ({ post }: { post: any }) => (
@@ -284,7 +261,8 @@ export default function CitizenDashboard() {
 
   return (
     <div className="w-full min-h-screen bg-black">
-      <NavBar />
+      <NavigationHeader title="CITIZEN DASHBOARD" customBackPath="/citizen" />
+      <TabNavigation />
 
       <main className="max-w-4xl mx-auto px-4 py-6">
         {/* Community Tab */}

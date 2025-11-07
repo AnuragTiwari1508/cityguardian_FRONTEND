@@ -3,12 +3,12 @@
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
+import NavigationHeader from "@/components/navigation-header"
 import { 
   CheckCircle2, 
   Trophy, 
   BarChart3, 
   Users, 
-  ArrowLeft, 
   Bell,
   User,
   LogOut,
@@ -69,62 +69,38 @@ export default function EmployeeDashboard() {
         }} />
       </div>
 
-      {/* Header */}
-      <header className="relative z-20 border-b border-green-500/30 bg-black/90 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-6">
-            <Button
-              onClick={() => handleNavigation('home')}
-              variant="ghost"
-              size="sm"
-              className="text-green-400 hover:bg-green-400/10 border border-gray-700 hover:border-green-400/50"
-            >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              BACK
-            </Button>
-            
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-green-400 rounded flex items-center justify-center text-black font-black">
-                ⚡
-              </div>
-              <div>
-                <h1 className="text-xl font-black text-green-400">CITY GUARDIAN</h1>
-                <p className="text-xs text-green-300/70">Employee Portal</p>
-              </div>
-            </div>
+      <NavigationHeader 
+        title="EMPLOYEE DASHBOARD" 
+        customBackPath="/employee"
+      >
+        {/* Top Stats */}
+        <div className="hidden md:flex items-center gap-6 text-sm">
+          <div className="text-center">
+            <div className="text-cyan-400 font-black">#12</div>
+            <div className="text-gray-400 text-xs">RANK</div>
           </div>
-
-          {/* Top Stats */}
-          <div className="hidden md:flex items-center gap-8">
-            <div className="flex items-center gap-6 text-sm">
-              <div className="text-center">
-                <div className="text-cyan-400 font-black">#12</div>
-                <div className="text-gray-400 text-xs">RANK</div>
-              </div>
-              <div className="text-center">
-                <div className="text-green-400 font-black">{stats.tasksCompleted}</div>
-                <div className="text-gray-400 text-xs">TASKS</div>
-              </div>
-              <div className="text-center">
-                <div className="text-blue-400 font-black">3,250</div>
-                <div className="text-gray-400 text-xs">XP</div>
-              </div>
-            </div>
-            
-            <div className="flex items-center gap-2">
-              <Button size="sm" variant="ghost" className="text-gray-400 hover:text-green-400">
-                <Bell className="w-4 h-4" />
-              </Button>
-              <Button size="sm" variant="ghost" className="text-gray-400 hover:text-green-400">
-                <User className="w-4 h-4" />
-              </Button>
-              <Button size="sm" variant="ghost" className="text-gray-400 hover:text-green-400">
-                <LogOut className="w-4 h-4" />
-              </Button>
-            </div>
+          <div className="text-center">
+            <div className="text-green-400 font-black">{stats.tasksCompleted}</div>
+            <div className="text-gray-400 text-xs">TASKS</div>
+          </div>
+          <div className="text-center">
+            <div className="text-blue-400 font-black">3,250</div>
+            <div className="text-gray-400 text-xs">XP</div>
           </div>
         </div>
-      </header>
+        
+        <div className="flex items-center gap-2">
+          <Button size="sm" variant="ghost" className="text-gray-400 hover:text-green-400">
+            <Bell className="w-4 h-4" />
+          </Button>
+          <Button size="sm" variant="ghost" className="text-gray-400 hover:text-green-400">
+            <User className="w-4 h-4" />
+          </Button>
+          <Button size="sm" variant="ghost" className="text-gray-400 hover:text-green-400">
+            <LogOut className="w-4 h-4" />
+          </Button>
+        </div>
+      </NavigationHeader>
 
       <div className="flex">
         {/* Sidebar Navigation */}
