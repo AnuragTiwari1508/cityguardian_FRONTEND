@@ -1,14 +1,28 @@
 import NextAuth from 'next-auth';
-import type { NextAuthOptions } from 'next-auth';
+import type { NextAuthOptions, Session } from 'next-auth';
+import type { JWT } from 'next-auth/jwt';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import dbConnect from '@/lib/dbConnect';
 import User from '@/models/User';
-import type { User as IUser } from '@/models/User';
 
 type Credentials = {
   email: string;
   password: string;
 };
+
+interface ExtendedToken extends JWT {
+  id: string;
+  role: 'citizen' | 'employee' | 'admin';
+}
+
+interface ExtendedSession extends Session {
+  user: {
+    id: string;
+    role: 'citizen' | 'employee' | 'admin';
+    email: string;
+    name: string;
+  };
+}
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -53,19 +67,25 @@ export const authOptions: NextAuthOptions = {
     })
   ],
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user }): Promise<ExtendedToken> {
       if (user) {
-        token.id = user.id;
-        token.role = user.role;
+        return {
+          ...token,
+          id: user.id,
+          role: user.role as 'citizen' | 'employee' | 'admin'
+        };
       }
-      return token;
+      return token as ExtendedToken;
     },
-    async session({ session, token }) {
-      if (session.user) {
-        session.user.id = token.id;
-        session.user.role = token.role;
-      }
-      return session;
+    async session({ session, token }): Promise<ExtendedSession> {
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: token.id as string,
+          role: token.role as 'citizen' | 'employee' | 'admin'
+        }
+      };
     }
   },
   pages: {
