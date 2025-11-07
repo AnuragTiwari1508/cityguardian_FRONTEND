@@ -1,0 +1,48 @@
+<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="asphalt" patternUnits="userSpaceOnUse" width="20" height="20">
+      <rect width="20" height="20" fill="#2c2c2c"/>
+      <circle cx="5" cy="5" r="1" fill="#404040"/>
+      <circle cx="15" cy="12" r="0.5" fill="#505050"/>
+      <circle cx="8" cy="17" r="0.8" fill="#383838"/>
+    </pattern>
+  </defs>
+  
+  <!-- Road surface -->
+  <rect width="400" height="300" fill="url(#asphalt)"/>
+  
+  <!-- Yellow line -->
+  <rect x="180" y="0" width="40" height="300" fill="#ffcc00"/>
+  <rect x="190" y="10" width="20" height="30" fill="#2c2c2c"/>
+  <rect x="190" y="60" width="20" height="30" fill="#2c2c2c"/>
+  <rect x="190" y="110" width="20" height="30" fill="#2c2c2c"/>
+  <rect x="190" y="160" width="20" height="30" fill="#2c2c2c"/>
+  <rect x="190" y="210" width="20" height="30" fill="#2c2c2c"/>
+  <rect x="190" y="260" width="20" height="30" fill="#2c2c2c"/>
+  
+  <!-- Large pothole -->
+  <ellipse cx="120" cy="180" rx="45" ry="30" fill="#1a1a1a"/>
+  <ellipse cx="120" cy="180" rx="40" ry="25" fill="#000"/>
+  
+  <!-- Water reflection in pothole -->
+  <ellipse cx="120" cy="180" rx="35" ry="20" fill="#2a4a6b" opacity="0.6"/>
+  <ellipse cx="115" cy="175" rx="15" ry="8" fill="#4a6a8b" opacity="0.4"/>
+  
+  <!-- Cracked edges around pothole -->
+  <path d="M 75 160 Q 85 150 95 165 Q 105 155 115 170" stroke="#555" stroke-width="2" fill="none"/>
+  <path d="M 165 170 Q 155 160 145 175 Q 135 165 125 180" stroke="#555" stroke-width="2" fill="none"/>
+  <path d="M 135 210 Q 145 200 155 215 Q 165 205 175 220" stroke="#555" stroke-width="2" fill="none"/>
+  
+  <!-- Small pothole -->
+  <ellipse cx="280" cy="120" rx="20" ry="15" fill="#1a1a1a"/>
+  <ellipse cx="280" cy="120" rx="15" ry="10" fill="#000"/>
+  
+  <!-- Debris and rocks -->
+  <circle cx="90" cy="100" r="3" fill="#8b7355"/>
+  <circle cx="320" cy="200" r="4" fill="#6b5939"/>
+  <circle cx="50" cy="250" r="2" fill="#9b8365"/>
+  
+  <!-- Tire marks -->
+  <path d="M 0 100 Q 50 95 100 100 Q 150 105 200 100" stroke="#1a1a1a" stroke-width="3" fill="none" opacity="0.5"/>
+  <path d="M 0 220 Q 50 215 100 220 Q 150 225 200 220" stroke="#1a1a1a" stroke-width="3" fill="none" opacity="0.5"/>
+</svg>

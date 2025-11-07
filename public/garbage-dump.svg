@@ -1,0 +1,69 @@
+<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="concrete" patternUnits="userSpaceOnUse" width="15" height="15">
+      <rect width="15" height="15" fill="#e0e0e0"/>
+      <rect x="0" y="0" width="1" height="15" fill="#ccc"/>
+      <rect x="0" y="0" width="15" height="1" fill="#ccc"/>
+    </pattern>
+  </defs>
+  
+  <!-- Concrete floor -->
+  <rect width="400" height="300" fill="url(#concrete)"/>
+  
+  <!-- Large garbage pile -->
+  <ellipse cx="200" cy="220" rx="120" ry="60" fill="#4a4a3a"/>
+  
+  <!-- Plastic bags -->
+  <ellipse cx="150" cy="180" rx="25" ry="15" fill="#2a2a2a"/>
+  <ellipse cx="180" cy="170" rx="20" ry="12" fill="#1a1a1a"/>
+  <ellipse cx="220" cy="175" rx="30" ry="18" fill="#3a3a2a"/>
+  <ellipse cx="250" cy="185" rx="22" ry="13" fill="#2a2a2a"/>
+  
+  <!-- Colored trash items -->
+  <!-- Blue plastic bottle -->
+  <rect x="170" y="160" width="8" height="20" rx="4" fill="#1e3a8a"/>
+  <rect x="172" y="158" width="4" height="4" rx="2" fill="#3b82f6"/>
+  
+  <!-- Red can -->
+  <rect x="200" y="165" width="12" height="15" rx="2" fill="#dc2626"/>
+  
+  <!-- Green bottle -->
+  <rect x="230" y="170" width="6" height="18" rx="3" fill="#16a34a"/>
+  
+  <!-- Yellow wrapper -->
+  <polygon points="190,185 200,180 205,190 195,195" fill="#eab308"/>
+  
+  <!-- Orange peel -->
+  <circle cx="160" cy="200" r="8" fill="#f97316"/>
+  <circle cx="158" cy="198" r="3" fill="#ea580c"/>
+  
+  <!-- Food waste -->
+  <ellipse cx="240" cy="195" rx="12" ry="8" fill="#65a30d"/>
+  <ellipse cx="180" cy="210" rx="15" ry="10" fill="#84cc16"/>
+  
+  <!-- Paper scraps -->
+  <polygon points="210,190 225,185 230,200 215,205" fill="#f5f5f5"/>
+  <polygon points="140,195 155,190 160,205 145,210" fill="#e5e5e5"/>
+  
+  <!-- Cigarette butts -->
+  <rect x="175" y="205" width="2" height="8" fill="#8b5cf6"/>
+  <rect x="205" y="200" width="2" height="8" fill="#8b5cf6"/>
+  <rect x="225" y="210" width="2" height="8" fill="#8b5cf6"/>
+  
+  <!-- Flies -->
+  <circle cx="190" cy="150" r="1" fill="#000"/>
+  <circle cx="210" cy="145" r="1" fill="#000"/>
+  <circle cx="240" cy="155" r="1" fill="#000"/>
+  <circle cx="170" cy="165" r="1" fill="#000"/>
+  
+  <!-- Stains on floor -->
+  <ellipse cx="120" cy="250" rx="15" ry="8" fill="#666" opacity="0.3"/>
+  <ellipse cx="280" cy="240" rx="20" ry="12" fill="#555" opacity="0.2"/>
+  <ellipse cx="320" cy="260" rx="12" ry="6" fill="#777" opacity="0.25"/>
+  
+  <!-- More scattered trash -->
+  <circle cx="80" cy="180" r="4" fill="#6b7280"/>
+  <circle cx="350" cy="200" r="3" fill="#4b5563"/>
+  <polygon points="60,220 70,215 75,230 65,235" fill="#ef4444"/>
+  <polygon points="340,170 350,165 355,180 345,185" fill="#10b981"/>
+</svg>

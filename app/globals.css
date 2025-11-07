@@ -322,4 +322,141 @@
   .mobile-grid-1 {
     grid-template-columns: 1fr;
   }
+  
+  /* Mobile-specific image frame enhancements */
+  .mobile-image-frame {
+    margin: 0.75rem 0;
+  }
+  
+  .mobile-image-frame img {
+    height: 200px;
+    border-radius: 0.5rem;
+  }
+  
+  /* Touch-friendly interaction areas */
+  .mobile-touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Improved mobile navigation */
+  .mobile-nav {
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+  }
+  
+  /* Mobile card spacing */
+  .mobile-card-spacing {
+    margin-bottom: 1rem;
+  }
+  
+  /* Optimized mobile grid */
+  .mobile-grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  
+  .mobile-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+}
+
+/* Tablet optimizations */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .tablet-grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .tablet-image-frame img {
+    height: 240px;
+  }
+}
+
+/* Enhanced image frame styles for all screen sizes */
+.problem-image-frame {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(145deg, rgba(34, 197, 94, 0.1), rgba(6, 182, 212, 0.1));
+  border: 2px solid rgba(34, 197, 94, 0.3);
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
+}
+
+.problem-image-frame:hover {
+  border-color: rgba(34, 197, 94, 0.8);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 10px 25px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(34, 197, 94, 0.2);
+}
+
+.problem-image-frame::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    45deg, 
+    transparent 30%, 
+    rgba(34, 197, 94, 0.1) 50%, 
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+  z-index: 1;
+}
+
+.problem-image-frame:hover::before {
+  transform: translateX(100%);
+}
+
+/* Corner accent animations */
+.corner-accent {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(34, 197, 94, 0.8);
+  transition: all 0.3s ease;
+}
+
+.corner-accent.top-left {
+  top: -2px;
+  left: -2px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.corner-accent.top-right {
+  top: -2px;
+  right: -2px;
+  border-left: none;
+  border-bottom: none;
+}
+
+.corner-accent.bottom-left {
+  bottom: -2px;
+  left: -2px;
+  border-right: none;
+  border-top: none;
+}
+
+.corner-accent.bottom-right {
+  bottom: -2px;
+  right: -2px;
+  border-left: none;
+  border-top: none;
+}
+
+.problem-image-frame:hover .corner-accent {
+  width: 24px;
+  height: 24px;
+  border-color: rgba(34, 197, 94, 1);
 }

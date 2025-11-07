@@ -32,7 +32,7 @@ export default function CitizenDashboard() {
   const [activeTab, setActiveTab] = useState("feed")
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
-  // Mock data for feed posts
+  // Mock data for feed posts with actual problem photos
   const feedPosts = [
     {
       id: 1,
@@ -42,7 +42,7 @@ export default function CitizenDashboard() {
       time: "2 hours ago",
       title: "Major Pothole Causing Traffic Issues",
       description: "Large pothole formed after recent rains. Multiple vehicles getting damaged. Urgent repair needed.",
-      image: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDQwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjMjEyMTIxIi8+CjxlbGxpcHNlIGN4PSIyMDAiIGN5PSIxODAiIHJ4PSIxMjAiIHJ5PSI4MCIgZmlsbD0iIzE0MTQxNCIvPgo8ZWxsaXBzZSBjeD0iMjAwIiBjeT0iMTcwIiByeD0iODAiIHJ5PSI1MCIgZmlsbD0iIzBhMGEwYSIvPgo8dGV4dCB4PSIyMDAiIHk9IjUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjNzc3NzU1IiBmb250LWZhbWlseT0ibW9ub3NwYWNlIiBmb250LXNpemU9IjE0cHgiPkRBTUFHRUQgUk9BRDwvdGV4dD4KPC9zdmc+",
+      image: "/road-pothole.svg",
       category: "Road Infrastructure",
       status: "pending",
       likes: 23,
@@ -57,7 +57,7 @@ export default function CitizenDashboard() {
       time: "4 hours ago",
       title: "Waste Collection Schedule Update",
       description: "New waste collection timings: Morning 6-9 AM, Evening 6-8 PM. Please keep waste ready 30 minutes before collection.",
-      image: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDQwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjMmEyYTJhIi8+CjxyZWN0IHg9IjUwIiB5PSI1MCIgd2lkdGg9IjMwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9IiMzYTNhM2EiLz4KPHJlY3QgeD0iMTAwIiB5PSIxMDAiIHdpZHRoPSIyMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjNGE0YTRhIi8+Cjx0ZXh0IHg9IjIwMCIgeT0iNDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiM5OTk5OTkiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiIGZvbnQtc2l6ZT0iMTJweCI+V0FTVEUgQ09MTEFDVEVRIEVRVUQ8L3RleHQ+Cjx0ZXh0IHg9IjIwMCIgeT0iMTYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjY2NjY2NjIiBmb250LWZhbWlseT0ibW9ub3NwYWNlIiBmb250LXNpemU9IjE4cHgiPkJJTjwvdGV4dD4KPC9zdmc+",
+      image: "/waste-collection.svg",
       category: "Municipal Notice",
       status: "active",
       likes: 45,
@@ -72,12 +72,27 @@ export default function CitizenDashboard() {
       time: "1 day ago",
       title: "Air Pollution from Construction Site",
       description: "Heavy dust and poor air quality due to construction activities. Affecting nearby residential areas.",
-      image: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDQwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjMzMzMzMzIi8+CjxjaXJjbGUgY3g9IjIwMCIgY3k9IjE1MCIgcj0iNDAiIGZpbGw9IiM2NjY2NjYiLz4KPGNpcmNsZSBjeD0iMTUwIiBjeT0iMTIwIiByPSIzMCIgZmlsbD0iIzU1NTU1NSIvPgo8Y2lyY2xlIGN4PSIyNTAiIGN5PSIxMjAiIHI9IjI1IiBmaWxsPSIjNDQ0NDQ0Ii8+Cjx0ZXh0IHg9IjIwMCIgeT0iNDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiM4ODg4ODgiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiIGZvbnQtc2l6ZT0iMTJweCI+QUlSIFBPTExVVElPTjwvdGV4dD4KPC9zdmc+",
+      image: "/air-pollution.svg",
       category: "Environment",
       status: "in_progress",
       likes: 31,
       comments: 15,
       priority: "medium"
+    },
+    {
+      id: 4,
+      type: "complaint",
+      author: "Amit Singh",
+      location: "Nehru Place Market",
+      time: "2 days ago",
+      title: "Garbage Overflow in Market Area",
+      description: "Large pile of garbage accumulating near market entrance. Creating hygiene issues and attracting pests.",
+      image: "/garbage-dump.svg",
+      category: "Waste Management",
+      status: "pending",
+      likes: 18,
+      comments: 6,
+      priority: "high"
     }
   ]
 
@@ -210,14 +225,31 @@ export default function CitizenDashboard() {
         <h3 className="text-white font-bold mb-2">{post.title}</h3>
         <p className="text-gray-300 text-sm mb-3 leading-relaxed">{post.description}</p>
 
-        {/* Post Image */}
+        {/* Post Image with Enhanced Frame */}
         {post.image && (
-          <div className="mb-4 rounded-lg overflow-hidden">
-            <img 
-              src={post.image} 
-              alt={post.title}
-              className="w-full h-48 object-cover bg-gray-800"
-            />
+          <div className="mb-4 relative">
+            {/* Gaming-style frame with neon glow */}
+            <div className="relative rounded-lg overflow-hidden border-2 border-green-400/30 bg-gradient-to-r from-green-400/10 to-cyan-400/10 p-1">
+              <div className="relative rounded-md overflow-hidden bg-gray-900">
+                <img 
+                  src={post.image} 
+                  alt={post.title}
+                  className="w-full h-48 sm:h-56 md:h-64 lg:h-72 object-cover transition-transform duration-300 hover:scale-105"
+                />
+                {/* Overlay grid pattern for cyberpunk effect */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
+                <div className="absolute inset-0 opacity-10 pointer-events-none" style={{
+                  backgroundImage: `linear-gradient(rgba(0,255,153,0.1) 1px, transparent 1px),
+                                  linear-gradient(90deg, rgba(0,255,153,0.1) 1px, transparent 1px)`,
+                  backgroundSize: '20px 20px'
+                }}></div>
+              </div>
+            </div>
+            {/* Corner accents */}
+            <div className="absolute top-0 left-0 w-4 h-4 border-l-2 border-t-2 border-green-400"></div>
+            <div className="absolute top-0 right-0 w-4 h-4 border-r-2 border-t-2 border-green-400"></div>
+            <div className="absolute bottom-0 left-0 w-4 h-4 border-l-2 border-b-2 border-green-400"></div>
+            <div className="absolute bottom-0 right-0 w-4 h-4 border-r-2 border-b-2 border-green-400"></div>
           </div>
         )}
 
@@ -351,11 +383,58 @@ export default function CitizenDashboard() {
                 {/* Photo Upload */}
                 <div>
                   <label className="block text-sm font-mono text-gray-300 mb-2">PHOTO EVIDENCE</label>
-                  <div className="border-2 border-dashed border-gray-600 rounded-lg p-8 text-center hover:border-green-400 transition-colors">
+                  <div className="border-2 border-dashed border-gray-600 rounded-lg p-6 text-center hover:border-green-400 transition-colors mb-4">
                     <Camera className="w-12 h-12 text-gray-500 mx-auto mb-4" />
                     <p className="text-gray-400 mb-2">Click to upload photos</p>
                     <p className="text-xs text-gray-500 font-mono">Maximum 5 photos, 10MB each</p>
                     <input type="file" multiple accept="image/*" className="hidden" />
+                  </div>
+                  
+                  {/* Sample Problem Photos for Reference */}
+                  <div className="mt-4">
+                    <p className="text-xs text-gray-400 font-mono mb-3">COMMON PROBLEMS (Reference Examples):</p>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                      <div className="relative group cursor-pointer">
+                        <div className="aspect-square rounded-lg overflow-hidden border border-gray-700 hover:border-green-400 transition-colors">
+                          <img 
+                            src="/road-pothole.svg" 
+                            alt="Road Pothole Example"
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <p className="text-xs text-gray-500 text-center mt-1">Road Damage</p>
+                      </div>
+                      <div className="relative group cursor-pointer">
+                        <div className="aspect-square rounded-lg overflow-hidden border border-gray-700 hover:border-green-400 transition-colors">
+                          <img 
+                            src="/garbage-dump.svg" 
+                            alt="Garbage Problem Example"
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <p className="text-xs text-gray-500 text-center mt-1">Waste Issue</p>
+                      </div>
+                      <div className="relative group cursor-pointer">
+                        <div className="aspect-square rounded-lg overflow-hidden border border-gray-700 hover:border-green-400 transition-colors">
+                          <img 
+                            src="/air-pollution.svg" 
+                            alt="Air Pollution Example"
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <p className="text-xs text-gray-500 text-center mt-1">Air Quality</p>
+                      </div>
+                      <div className="relative group cursor-pointer">
+                        <div className="aspect-square rounded-lg overflow-hidden border border-gray-700 hover:border-green-400 transition-colors">
+                          <img 
+                            src="/waste-collection.svg" 
+                            alt="Waste Collection Example"
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <p className="text-xs text-gray-500 text-center mt-1">Collection</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
