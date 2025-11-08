@@ -97,46 +97,48 @@ export default function ProfilePage() {
           </button>
 
           {/* Profile Header */}
-          <Card className="p-8 border-green-500/30 bg-gray-900/90 backdrop-blur-sm mb-6">
-            <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
+          <Card className="p-4 sm:p-6 md:p-8 border-green-500/30 bg-gray-900/90 backdrop-blur-sm mb-6">
+            <div className="flex flex-col md:flex-row items-center md:items-start gap-4 sm:gap-6">
               {/* Avatar */}
-              <Avatar className="w-32 h-32 border-4 border-green-400/50">
-                <AvatarFallback className="bg-green-400 text-black text-4xl font-black">
+              <Avatar className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 border-4 border-green-400/50 flex-shrink-0">
+                <AvatarFallback className="bg-green-400 text-black text-3xl sm:text-4xl font-black">
                   {getInitials(user.name)}
                 </AvatarFallback>
               </Avatar>
 
               {/* Profile Info */}
-              <div className="flex-1 text-center md:text-left">
+              <div className="flex-1 text-center md:text-left w-full">
                 {isEditing ? (
-                  <div className="flex items-center gap-2 mb-4">
+                  <div className="flex flex-col sm:flex-row items-center gap-2 mb-4">
                     <Input
                       value={editedName}
                       onChange={(e) => setEditedName(e.target.value)}
-                      className="bg-gray-800 border-green-400/50 text-green-400 font-mono text-2xl font-black max-w-md"
+                      className="bg-gray-800 border-green-400/50 text-green-400 font-mono text-xl sm:text-2xl font-black w-full sm:max-w-md"
                     />
-                    <Button
-                      onClick={handleSave}
-                      size="sm"
-                      className="bg-green-400 text-black hover:bg-green-300"
-                    >
-                      <Save className="w-4 h-4" />
-                    </Button>
-                    <Button
-                      onClick={() => {
-                        setEditedName(user.name)
-                        setIsEditing(false)
-                      }}
-                      size="sm"
-                      variant="ghost"
-                      className="text-red-400 hover:text-red-300"
-                    >
-                      <X className="w-4 h-4" />
-                    </Button>
+                    <div className="flex gap-2">
+                      <Button
+                        onClick={handleSave}
+                        size="sm"
+                        className="bg-green-400 text-black hover:bg-green-300"
+                      >
+                        <Save className="w-4 h-4" />
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          setEditedName(user.name)
+                          setIsEditing(false)
+                        }}
+                        size="sm"
+                        variant="ghost"
+                        className="text-red-400 hover:text-red-300"
+                      >
+                        <X className="w-4 h-4" />
+                      </Button>
+                    </div>
                   </div>
                 ) : (
-                  <div className="flex items-center gap-3 mb-4 justify-center md:justify-start">
-                    <h1 className="text-4xl font-black text-green-400 neon-glow">
+                  <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-3 mb-4 justify-center md:justify-start">
+                    <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-green-400 neon-glow break-all">
                       {user.name}
                     </h1>
                     <Button
@@ -180,33 +182,33 @@ export default function ProfilePage() {
           </Card>
 
           {/* Account Details */}
-          <Card className="p-8 border-green-500/30 bg-gray-900/90 backdrop-blur-sm mb-6">
-            <h2 className="text-2xl font-black text-green-400 mb-6 flex items-center gap-2">
-              <User className="w-6 h-6" />
+          <Card className="p-4 sm:p-6 md:p-8 border-green-500/30 bg-gray-900/90 backdrop-blur-sm mb-6">
+            <h2 className="text-xl sm:text-2xl font-black text-green-400 mb-4 sm:mb-6 flex items-center gap-2">
+              <User className="w-5 h-5 sm:w-6 sm:h-6" />
               ACCOUNT_DETAILS
             </h2>
 
-            <div className="space-y-4">
-              <div className="p-4 bg-gray-800/50 rounded border border-gray-700">
+            <div className="space-y-3 sm:space-y-4">
+              <div className="p-3 sm:p-4 bg-gray-800/50 rounded border border-gray-700">
                 <label className="block text-xs font-mono text-gray-400 mb-2">USER_ID</label>
-                <p className="text-green-400 font-mono font-bold">{user.id}</p>
+                <p className="text-green-400 font-mono font-bold text-sm sm:text-base break-all">{user.id}</p>
               </div>
 
-              <div className="p-4 bg-gray-800/50 rounded border border-gray-700">
+              <div className="p-3 sm:p-4 bg-gray-800/50 rounded border border-gray-700">
                 <label className="block text-xs font-mono text-gray-400 mb-2">EMAIL_ADDRESS</label>
-                <p className="text-green-400 font-mono">{user.email}</p>
+                <p className="text-green-400 font-mono text-sm sm:text-base break-all">{user.email}</p>
               </div>
 
-              <div className="p-4 bg-gray-800/50 rounded border border-gray-700">
+              <div className="p-3 sm:p-4 bg-gray-800/50 rounded border border-gray-700">
                 <label className="block text-xs font-mono text-gray-400 mb-2">OPERATIVE_CLASS</label>
-                <p className="text-green-400 font-mono">{getUserTypeLabel(user.userType)}</p>
+                <p className="text-green-400 font-mono text-sm sm:text-base">{getUserTypeLabel(user.userType)}</p>
               </div>
 
-              <div className="p-4 bg-gray-800/50 rounded border border-gray-700">
+              <div className="p-3 sm:p-4 bg-gray-800/50 rounded border border-gray-700">
                 <label className="block text-xs font-mono text-gray-400 mb-2">ACCOUNT_STATUS</label>
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                  <p className="text-green-400 font-mono font-bold">ACTIVE</p>
+                  <p className="text-green-400 font-mono font-bold text-sm sm:text-base">ACTIVE</p>
                 </div>
               </div>
 
@@ -226,24 +228,24 @@ export default function ProfilePage() {
           </Card>
 
           {/* Quick Actions */}
-          <Card className="p-8 border-green-500/30 bg-gray-900/90 backdrop-blur-sm">
-            <h2 className="text-2xl font-black text-green-400 mb-6">QUICK_ACTIONS</h2>
+          <Card className="p-4 sm:p-6 md:p-8 border-green-500/30 bg-gray-900/90 backdrop-blur-sm">
+            <h2 className="text-xl sm:text-2xl font-black text-green-400 mb-4 sm:mb-6">QUICK_ACTIONS</h2>
             
-            <div className="grid md:grid-cols-2 gap-4">
+            <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
               <Button
                 onClick={() => router.push(`/${user.userType === 'citizen' ? 'citizen' : user.userType === 'employee' ? 'employee' : user.userType === 'office' ? 'control' : 'environmental'}/dashboard`)}
-                className="h-16 bg-gradient-to-r from-green-400 to-cyan-400 text-black font-black hover:from-green-300 hover:to-cyan-300"
+                className="h-12 sm:h-14 md:h-16 bg-gradient-to-r from-green-400 to-cyan-400 text-black font-black hover:from-green-300 hover:to-cyan-300 text-sm sm:text-base"
               >
-                <Shield className="w-5 h-5 mr-2" />
+                <Shield className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                 GO_TO_DASHBOARD
               </Button>
 
               <Button
                 onClick={logout}
                 variant="outline"
-                className="h-16 border-red-400/50 text-red-400 hover:bg-red-400/10 font-black"
+                className="h-12 sm:h-14 md:h-16 border-red-400/50 text-red-400 hover:bg-red-400/10 font-black text-sm sm:text-base"
               >
-                <LogOut className="w-5 h-5 mr-2" />
+                <LogOut className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                 TERMINATE_SESSION
               </Button>
             </div>
