@@ -78,19 +78,19 @@ export default function LoginPortal({ onBack }: { onBack: () => void }) {
           <div className="max-w-4xl w-full">
             <button 
               onClick={onBack}
-              className="mb-8 flex items-center gap-2 text-green-400 hover:text-green-300 transition-colors font-mono"
+              className="mb-4 sm:mb-6 md:mb-8 flex items-center gap-2 text-green-400 hover:text-green-300 transition-colors font-mono"
             >
               <ArrowLeft className="w-5 h-5" />
               BACK_TO_MAIN
-            </button>            <Card className="p-12 border-green-500/30 bg-gray-900/80 backdrop-blur-sm">
-              <div className="text-center mb-12">
-                <h2 className="text-5xl font-black mb-4 text-green-400 tracking-wider neon-glow">
+            </button>            <Card className="p-4 sm:p-6 md:p-8 lg:p-12 border-green-500/30 bg-gray-900/80 backdrop-blur-sm">
+              <div className="text-center mb-6 sm:mb-8 md:mb-12">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black mb-2 sm:mb-4 text-green-400 tracking-wider neon-glow">
                   SELECT OPERATIVE CLASS
                 </h2>
-                <p className="text-gray-400 font-mono">Choose your mission profile to access the network</p>
+                <p className="text-sm sm:text-base text-gray-400 font-mono">Choose your mission profile to access the network</p>
               </div>
 
-              <div className="grid md:grid-cols-4 gap-6">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
                 {[
                   {
                     id: "citizen",
@@ -138,24 +138,25 @@ export default function LoginPortal({ onBack }: { onBack: () => void }) {
                     <button
                       key={role.id}
                       onClick={() => setUserType(role.id as any)}
-                      className={`p-8 rounded-lg border-2 transition-all duration-300 ${role.color} ${role.bg} hover:shadow-lg ${role.glow} group`}
+                      className={`p-3 sm:p-4 md:p-6 lg:p-8 rounded-lg border-2 transition-all duration-300 ${role.color} ${role.bg} hover:shadow-lg ${role.glow} group`}
                     >
-                      <div className="mb-6">
+                      <div className="mb-3 sm:mb-4 md:mb-6">
                         {role.id === 'environmental' ? (
-                          <div className="w-8 h-8 flex items-center justify-center text-cyan-400 font-black text-lg">
+                          <div className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 flex items-center justify-center text-cyan-400 font-black text-base sm:text-lg">
                             ⚡
                           </div>
                         ) : (
-                          <Icon className="w-8 h-8 text-green-400 group-hover:animate-pulse" />
+                          <Icon className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-green-400 group-hover:animate-pulse" />
                         )}
                       </div>
-                      <h3 className="font-black text-lg text-white mb-2 tracking-wide">{role.title}</h3>
-                      <p className="text-sm text-gray-400 font-mono leading-relaxed">{role.description}</p>
+                      <h3 className="font-black text-xs sm:text-sm md:text-base lg:text-lg text-white mb-1 sm:mb-2 tracking-wide">{role.title}</h3>
+                      <p className="text-xs sm:text-sm text-gray-400 font-mono leading-relaxed hidden sm:block">{role.description}</p>
                       
                       {/* Access Level Indicator */}
-                      <div className="mt-4 text-xs font-mono text-gray-500 flex items-center justify-center gap-1">
+                      <div className="mt-2 sm:mt-4 text-xs font-mono text-gray-500 flex items-center justify-center gap-1">
                         <div className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></div>
-                        ACCESS_GRANTED
+                        <span className="hidden sm:inline">ACCESS_GRANTED</span>
+                        <span className="sm:hidden">✓</span>
                       </div>
                     </button>
                   )
@@ -184,21 +185,21 @@ export default function LoginPortal({ onBack }: { onBack: () => void }) {
       <div className="max-w-md w-full relative z-10">
         <button
           onClick={() => setUserType(null)}
-          className="mb-8 flex items-center gap-2 text-green-400 hover:text-green-300 transition-colors font-mono"
+          className="mb-4 sm:mb-6 md:mb-8 flex items-center gap-2 text-green-400 hover:text-green-300 transition-colors font-mono text-sm sm:text-base"
         >
           <ChevronLeft className="w-5 h-5" />
           CHANGE_CLASS
         </button>
 
-        <Card className="p-8 border-green-500/30 bg-gray-900/90 backdrop-blur-sm fade-in-scale">
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-green-400 rounded-full mb-4">
-              {isSignup ? <UserPlus className="w-8 h-8 text-black" /> : <Shield className="w-8 h-8 text-black" />}
+        <Card className="p-4 sm:p-6 md:p-8 border-green-500/30 bg-gray-900/90 backdrop-blur-sm fade-in-scale">
+          <div className="text-center mb-6 sm:mb-8">
+            <div className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-green-400 rounded-full mb-3 sm:mb-4">
+              {isSignup ? <UserPlus className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-black" /> : <Shield className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-black" />}
             </div>
-            <h2 className="text-3xl font-black text-green-400 mb-2 tracking-wider">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-green-400 mb-2 tracking-wider break-all">
               {isSignup ? "CREATE_ACCOUNT" : (userType === "environmental" ? "SENSOR_ACCESS" : `${userType?.toUpperCase()}_LOGIN`)}
             </h2>
-            <p className="text-gray-400 font-mono text-sm">
+            <p className="text-gray-400 font-mono text-xs sm:text-sm">
               {isSignup ? "Register new operative account" : "Enter authentication credentials"}
             </p>
           </div>
@@ -264,30 +265,30 @@ export default function LoginPortal({ onBack }: { onBack: () => void }) {
           <Button
             onClick={handleAuth}
             disabled={loading || (isSignup && !credentials.name) || !credentials.email || !credentials.password}
-            className="w-full bg-gradient-to-r from-green-400 to-cyan-400 text-black font-black h-12 hover:from-green-300 hover:to-cyan-300 shadow-lg shadow-green-400/25 font-mono tracking-wide disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-gradient-to-r from-green-400 to-cyan-400 text-black font-black h-11 sm:h-12 hover:from-green-300 hover:to-cyan-300 shadow-lg shadow-green-400/25 font-mono tracking-wide disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
           >
             {loading ? (
               <>
-                <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 mr-2 animate-spin" />
                 {isSignup ? "CREATING..." : "AUTHENTICATING..."}
               </>
             ) : (
               <>
-                {isSignup ? <UserPlus className="w-5 h-5 mr-2" /> : <LogIn className="w-5 h-5 mr-2" />}
+                {isSignup ? <UserPlus className="w-4 h-4 sm:w-5 sm:h-5 mr-2" /> : <LogIn className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />}
                 {isSignup ? "CREATE_ACCOUNT" : "INITIALIZE_SESSION"}
               </>
             )}
           </Button>
 
           {/* Toggle between Login and Signup */}
-          <div className="mt-6 text-center">
+          <div className="mt-4 sm:mt-6 text-center">
             <button
               onClick={() => {
                 setIsSignup(!isSignup)
                 setError("")
                 setSuccess("")
               }}
-              className="text-green-400 hover:text-green-300 text-sm font-mono underline transition-colors"
+              className="text-green-400 hover:text-green-300 text-xs sm:text-sm font-mono underline transition-colors"
               disabled={loading}
             >
               {isSignup ? "Already have an account? LOGIN" : "Need an account? SIGN_UP"}

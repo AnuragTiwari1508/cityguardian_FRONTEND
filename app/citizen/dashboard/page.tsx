@@ -645,17 +645,18 @@ export default function CitizenDashboard() {
                   
                   {/* Photo Previews */}
                   {photoPreviewUrls.length > 0 && (
-                    <div className="grid grid-cols-3 gap-3 mb-4">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3 mb-4">
                       {photoPreviewUrls.map((url, index) => (
                         <div key={index} className="relative group">
                           <img 
                             src={url} 
                             alt={`Preview ${index + 1}`}
-                            className="w-full h-24 object-cover rounded-lg border border-gray-700"
+                            className="w-full h-20 sm:h-24 object-cover rounded-lg border border-gray-700"
                           />
                           <button
+                            type="button"
                             onClick={() => removePhoto(index)}
-                            className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                            className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-7 h-7 sm:w-6 sm:h-6 flex items-center justify-center opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity text-sm font-bold"
                           >
                             ×
                           </button>
@@ -667,7 +668,7 @@ export default function CitizenDashboard() {
                   {/* Sample Problem Photos for Reference */}
                   <div className="mt-4">
                     <p className="text-xs text-gray-400 font-mono mb-3">COMMON PROBLEMS (Reference Examples):</p>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-3">
                       <div className="relative group cursor-pointer">
                         <div className="aspect-square rounded-lg overflow-hidden border border-gray-700 hover:border-green-400 transition-colors">
                           <img 
@@ -762,10 +763,10 @@ export default function CitizenDashboard() {
 
                 {/* Success Message */}
                 {submitSuccess && (
-                  <div className="bg-green-500/20 border border-green-400 rounded-lg p-4 text-center">
-                    <CheckCircle2 className="w-12 h-12 text-green-400 mx-auto mb-2" />
-                    <p className="text-green-400 font-bold text-lg">Complaint Submitted Successfully!</p>
-                    <p className="text-gray-400 text-sm mt-1">Redirecting to feed...</p>
+                  <div className="bg-green-500/20 border border-green-400 rounded-lg p-3 sm:p-4 text-center">
+                    <CheckCircle2 className="w-10 h-10 sm:w-12 sm:h-12 text-green-400 mx-auto mb-2" />
+                    <p className="text-green-400 font-bold text-base sm:text-lg">Complaint Submitted Successfully!</p>
+                    <p className="text-gray-400 text-xs sm:text-sm mt-1">Redirecting to feed...</p>
                   </div>
                 )}
 
@@ -773,16 +774,16 @@ export default function CitizenDashboard() {
                 <Button 
                   onClick={handleComplaintSubmit}
                   disabled={isSubmitting || submitSuccess}
-                  className="w-full bg-gradient-to-r from-green-400 to-cyan-400 text-black font-black text-lg h-12 hover:from-green-300 hover:to-cyan-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full bg-gradient-to-r from-green-400 to-cyan-400 text-black font-black text-base sm:text-lg h-11 sm:h-12 hover:from-green-300 hover:to-cyan-300 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isSubmitting ? (
                     <>
-                      <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                      <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 mr-2 animate-spin" />
                       SUBMITTING...
                     </>
                   ) : (
                     <>
-                      <Upload className="w-5 h-5 mr-2" />
+                      <Upload className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                       SUBMIT COMPLAINT
                     </>
                   )}
