@@ -1,5 +1,5 @@
-import EnvironmentalDashboard from "@/components/environmental-dashboard"
+import RaipurRealtimeDashboard from "@/components/raipur-realtime-dashboard"
 
 export default function EnvironmentalPage() {
-  return <EnvironmentalDashboard />
+  return <RaipurRealtimeDashboard />
 }

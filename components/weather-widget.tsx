@@ -137,7 +137,7 @@ export default function WeatherWidget() {
           }
 
           const data = await response.json()
-          const city = await getCityName(latitude, longitude)
+          const city = await getCityName(latitude, longitude) || "Raipur, Chhattisgarh"
 
           setWeather({
             temperature: Math.round(data.current.temperature_2m),
