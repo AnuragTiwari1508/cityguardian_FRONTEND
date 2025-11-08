@@ -294,16 +294,6 @@ export default function LoginPortal({ onBack }: { onBack: () => void }) {
               {isSignup ? "Already have an account? LOGIN" : "Need an account? SIGN_UP"}
             </button>
           </div>
-
-          {!isSignup && (
-            <div className="mt-6 p-4 bg-gray-800/50 rounded border border-gray-700">
-              <p className="text-center text-gray-400 text-xs font-mono mb-2">DEMO_CREDENTIALS</p>
-              <div className="text-center text-green-400 text-xs font-mono">
-                ID: demo@cityguardian.net<br/>
-                CODE: guardian2025
-              </div>
-            </div>
-          )}
         </Card>
       </div>
     </div>

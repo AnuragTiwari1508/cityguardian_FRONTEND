@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
     // Check if user already exists
     if (users.has(email)) {
       return NextResponse.json(
-        { success: false, message: 'User already exists with this email' },
+        { success: false, message: 'Account already exists with this email. Please login instead.' },
         { status: 409 }
       )
     }

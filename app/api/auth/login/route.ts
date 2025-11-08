@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
 
     if (!user) {
       return NextResponse.json(
-        { success: false, message: 'Invalid email or password' },
+        { success: false, message: 'Account not found. Please sign up first.' },
         { status: 401 }
       )
     }
@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
     // Check password
     if (user.password !== password) {
       return NextResponse.json(
-        { success: false, message: 'Invalid email or password' },
+        { success: false, message: 'Incorrect password. Please try again.' },
         { status: 401 }
       )
     }
