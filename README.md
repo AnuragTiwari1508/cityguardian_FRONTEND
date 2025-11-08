@@ -36,6 +36,68 @@ A gaming-themed environmental monitoring platform with Matrix/Cyberpunk aestheti
 - **Package Manager**: pnpm (Vercel optimized)
 - **Deployment**: Vercel
 
+## 🔧 Hardware Models
+
+### Environmental Monitoring Device
+
+Our custom-built IoT sensor array designed for real-time environmental data collection:
+
+![Hardware Model - Environmental Sensor Array](/hardware-model-main.jpg)
+
+#### Components
+- **Microcontroller**: Arduino-based processing unit
+- **Sensors**: 
+  - Air Quality Sensor (PM2.5, PM10)
+  - Temperature & Humidity Sensor
+  - CO2 Detection Module
+  - Ultrasonic Distance Sensor
+- **Display**: LCD Screen for real-time data visualization
+- **Connectivity**: WiFi module for cloud data transmission
+- **Power**: Rechargeable battery with solar panel option
+
+#### Features
+- **Real-time Data Collection**: Continuous environmental monitoring
+- **Local Display**: Instant readings on LCD screen
+- **Cloud Integration**: Automatic data upload to dashboard
+- **Weather Resistant**: Outdoor deployment capability
+- **Low Power Consumption**: Extended battery life
+- **Modular Design**: Easy sensor replacement and upgrades
+
+#### Technical Specifications
+- **Operating Voltage**: 5V DC
+- **Data Transmission**: WiFi 802.11 b/g/n
+- **Measurement Range**: 
+  - Temperature: -40°C to +85°C
+  - Humidity: 0-100% RH
+  - PM2.5/PM10: 0-999 μg/m³
+- **Accuracy**: ±2% for temperature, ±3% for humidity
+- **Sampling Rate**: Every 30 seconds
+- **Deployment**: Indoor/Outdoor compatible
+
+### Compact Monitoring Unit
+
+A smaller, portable version for personal environmental monitoring:
+
+![Hardware Model - Compact Unit](/hardware-model-compact.jpg)
+
+#### Features
+- **Portable Design**: Lightweight and battery-powered
+- **Personal Monitoring**: Individual air quality tracking
+- **Mobile App Integration**: Real-time data on smartphone
+- **Quick Setup**: Plug-and-play installation
+
+### Network Gateway Device
+
+Central hub for multiple sensor coordination:
+
+![Hardware Model - Gateway Hub](/hardware-model-gateway.jpg)
+
+#### Capabilities
+- **Multi-Sensor Management**: Coordinate up to 50 devices
+- **Data Aggregation**: Central processing and analytics
+- **Edge Computing**: Local AI processing capabilities
+- **Redundant Connectivity**: Multiple communication protocols
+
 ## 🚀 Quick Start
 
 ### Prerequisites
